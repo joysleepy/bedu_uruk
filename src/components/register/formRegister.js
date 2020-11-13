@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BASE_API, SITE_KEY, SECRET_KEY } from '../../keys'; 
 import { useFormik } from 'formik'; 
 
+const gtokenContainer   = document.getElementById("gToken"); 
 
 console.log(BASE_API); 
 
@@ -18,7 +19,20 @@ function FormRegister(){
             })
         })
     }
-      
+    
+    // cross fingers
+    function getGoogleToken(){
+        return new Promise(function(resolve, reject){
+            window.grecaptcha.ready(function() {
+                //gtokenContainer.value = ''; 
+                window.grecaptcha.execute(SITE_KEY, {action: 'submit'}).then(function(token) {
+                    //console.log(token);
+                    resolve(token); 
+                });
+            });
+        });
+    } 
+
     useEffect(() => {
         // Add reCaptcha
         const script = document.createElement("script"); 
@@ -39,8 +53,12 @@ function FormRegister(){
             RE_PWD: '' 
         }, 
         onSubmit: values => {
-            console.log(handleLoaded);
-            console.log('Form values: ', formik.values); 
+            getGoogleToken().
+            then(resolve => { 
+                formik.setFieldValue('gToken', resolve); 
+                //console.log(resolve, "yur gtoken...")
+                console.log('Form values: ', formik.values); 
+            });    
         }
     });  
     
