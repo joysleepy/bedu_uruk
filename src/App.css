@@ -1,38 +1,51 @@
-.App {
-  text-align: center;
+html{
+  scroll-behavior:smooth;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --uruk-navy: #174DFF; 
+  --uruk-navy-hover: #173aaf; 
+  --uruk-cyan: #00ebee;  
+  --uruk-light-gray: #f7f7f7;
+  --uruk-navy-gradient: linear-gradient(90deg, #173aaf,#173aaf 45%, #174DFF); 
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* fondos */
+.bg-light-gray{
+  background-color: var(--uruk-light-gray); 
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* boxes */
+.mainbox{
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  border-radius: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+.gradientBox{
+  background: var(--uruk-navy-gradient); 
+  color: white; 
+  border-radius: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* botones */
+.bg-uruk-cyan{
+  background-color: var(--uruk-cyan); 
+  color: white; 
+}
+.bg-uruk-navy{
+  background-color: var(--uruk-navy);
+  color: white; 
+}
+
+.bg-uruk-navy:hover{
+  background-color: var(--uruk-navy-hover);
+  color: white;  
+}
+
+
+/* adjust images */
+.w-100{
+  width: 100%;
 }

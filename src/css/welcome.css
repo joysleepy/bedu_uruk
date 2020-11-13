@@ -1,0 +1,116 @@
+/* Estilos espècificos de la pagina de bienmvenda */
+
+:target:before {
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -100px 0 0;
+    /*border:1px solid tomato; TEST ONLY*/
+  }
+  
+  .uruk-text{
+    color: var(--uruk-navy) !important;
+  }
+  
+  #header img{
+    width: 100px;
+  }
+  
+  #main .carousel-inner img{
+    min-height: 70vh;
+    max-height: 70vh;
+    object-fit: cover;
+    filter: grayscale(70%);
+  }
+  
+  #main{
+    position: relative; 
+  }
+  
+  #main .overlay{
+    position: absolute; 
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    z-index: 1000;
+  }
+  
+  #main .overlay .container, 
+  #main .overlay .row {
+    height: 100%;
+  }
+  
+  /*
+  .carousel-fade .carousel-item {
+    opacity: 0;
+    -webkit-transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    -ms-transition: opacity 0.1s ease-in-out;
+    -o-transition: opacity 0.1s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
+    left: 0 !important;
+  }
+  
+  .carousel-fade .active {
+    opacity: 1 !important;
+  }
+  
+  .carousel-fade .left {
+    opacity: 0 !important;
+    -webkit-transition: opacity 0.5s ease-in-out !important;
+    -moz-transition: opacity 0.5s ease-in-out !important;
+    -ms-transition: opacity 0.5s ease-in-out !important;
+    -o-transition: opacity 0.5s ease-in-out !important;
+    transition: opacity 0.5s ease-in-out !important;
+  }
+  
+  .carousel-fade .carousel-control {
+    opacity: 1 !important;
+  }
+  */
+  
+  
+  
+  /* .carousel-fade .carousel-item {
+      opacity: 0;
+      transition-duration: .9s;
+      transition-property: opacity;
+  }
+  
+  .carousel-fade .carousel-item.active,
+  .carousel-fade .carousel-item-next.carousel-item-left,
+  .carousel-fade .carousel-item-prev.carousel-item-right {
+      opacity: 1;
+  }
+  
+  .carousel-fade .active.carousel-item-left,
+  .carousel-fade .active.carousel-item-right {
+      opacity: 0;
+  }
+  
+  .carousel-fade .carousel-item-next,
+  .carousel-fade .carousel-item-prev,
+  .carousel-fade .carousel-item.active,
+  .carousel-fade .active.carousel-item-left,
+  .carousel-fade .active.carousel-item-prev {
+      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
+  } */
+
+/* Footer Styles */
+#footer{
+    background: var(--uruk-navy-gradient);
+  
+  }
+  #footer a{
+    color: white;
+  }
+  
+  /* secondary */
+  #secondary .container-fluid .row{
+    background-color: #343a40;
+    color: white;
+  }
