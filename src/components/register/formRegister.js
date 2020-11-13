@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BASE_API, SITE_KEY, SECRET_KEY } from '../../keys'; 
 import { useFormik } from 'formik'; 
 
-const gtokenContainer   = document.getElementById("gToken"); 
+// const gtokenContainer   = document.getElementById("gToken"); 
 
 console.log(BASE_API); 
 
@@ -12,27 +12,12 @@ function FormRegister(){
         window.grecaptcha.ready(_ => {
           window.grecaptcha
             .execute(SITE_KEY, { action: "submit" })
-            .then(token => {
-                //console.log(token); 
-                //document.getElementById('gToken').value = 'tuMadre';
-                return token;
+            .then(token => { 
+                formik.setFieldValue('gToken', token);
             })
         })
     }
     
-    // cross fingers
-    function getGoogleToken(){
-        return new Promise(function(resolve, reject){
-            window.grecaptcha.ready(function() {
-                //gtokenContainer.value = ''; 
-                window.grecaptcha.execute(SITE_KEY, {action: 'submit'}).then(function(token) {
-                    //console.log(token);
-                    resolve(token); 
-                });
-            });
-        });
-    } 
-
     useEffect(() => {
         // Add reCaptcha
         const script = document.createElement("script"); 
@@ -53,16 +38,10 @@ function FormRegister(){
             RE_PWD: '' 
         }, 
         onSubmit: values => {
-            getGoogleToken().
-            then(resolve => { 
-                formik.setFieldValue('gToken', resolve); 
-                //console.log(resolve, "yur gtoken...")
-                console.log('Form values: ', formik.values); 
-            });    
+            console.log('Form values: ', formik.values); 
         }
     });  
-    
-    
+
     return(
         <div className="col-12 col-md-6" style={{display: "flex", alignItems: "center"}}>
             <div id="signupbox" className="container gradientBox pt-2 pb-2">
