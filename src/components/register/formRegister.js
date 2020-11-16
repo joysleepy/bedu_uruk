@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'; 
 import { BASE_API, SITE_KEY, SECRET_KEY } from '../../keys'; 
-import { useFormik } from 'formik'; 
+import { ErrorMessage, useFormik } from 'formik'; 
+import * as Yup from 'yup'; 
 
 // const gtokenContainer   = document.getElementById("gToken"); 
 
-console.log(BASE_API); 
+// console.log(BASE_API); 
 
 function FormRegister(){
     
@@ -26,21 +27,37 @@ function FormRegister(){
         document.body.appendChild(script)
     }, []);
 
+    const initialValues = {
+        gToken: '', 
+        Nombres: '', 
+        Apellido_Paterno: '', 
+        Apellido_Materno: '', 
+        email: '', 
+        PWD: '', 
+        RE_PWD: '' 
+    }
+    
+    const onSubmit = values => {
+        handleLoaded();
+        console.log('Form values: ', values); 
+    }
+    
+    const validationSchema = Yup.object({
+        Nombres: Yup.string().required('Requerido'), 
+        Apellido_Paterno: Yup.string().required('Requerido'), 
+        Apellido_Materno: Yup.string().required('Requerido'), 
+        email: Yup.string().email('Formato inválido').required('Requerido'), 
+        PWD: Yup.string().required('Requerido'), 
+        RE_PWD: Yup.string().required('Requerido'), 
+    });
 
     const formik = useFormik({
-        initialValues: {
-            gToken: '', 
-            Nombres: '', 
-            Apellido_Paterno: '', 
-            Apellido_Materno: '', 
-            email: '', 
-            PWD: '', 
-            RE_PWD: '' 
-        }, 
-        onSubmit: values => {
-            console.log('Form values: ', formik.values); 
-        }
+        initialValues, 
+        onSubmit, 
+        validationSchema 
     });  
+
+    // console.log('Form errors', formik.errors); 
 
     return(
         <div className="col-12 col-md-6" style={{display: "flex", alignItems: "center"}}>
@@ -61,32 +78,38 @@ function FormRegister(){
                     
                     <div className="form-group col-lg-6">
                         <label htmlFor="Nombres" className="control-label mb-0">Nombres:</label>
-                        <input type="text" className="form-control" name="Nombres" placeholder="Nombres" onChange={formik.handleChange} value={formik.values.Nombres} required />
+                        <input type="text" className="form-control" name="Nombres" placeholder="Nombres" {...formik.getFieldProps('Nombres')} />
+                        {formik.touched.Nombres && formik.errors.Nombres ? <span>{formik.errors.Nombres}</span> : null }
                     </div>
                     
                     <div className="form-group col-lg-6">
                         <label htmlFor="Apellido_Paterno" className="control-label mb-0">Apellido Paterno</label>
-                        <input type="text" className="form-control" name="Apellido_Paterno" id="Apellido_Paterno" placeholder="Apellido Paterno" onChange={formik.handleChange} value={formik.values.Apellido_Paterno} required />
+                        <input type="text" className="form-control" name="Apellido_Paterno" id="Apellido_Paterno" placeholder="Apellido Paterno" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Apellido_Paterno} />
+                        {formik.touched.Apellido_Paterno && formik.errors.Apellido_Paterno ? <span>{formik.errors.Apellido_Paterno}</span> : null }
                     </div>
                     
                     <div className="form-group col-lg-6">
                         <label htmlFor="Apellido_Materno" className="control-label mb-0">Apellido Materno</label>
-                        <input type="text" className="form-control" name="Apellido_Materno" id="Apellido_Materno" placeholder="Apellido Materno" onChange={formik.handleChange} value={formik.values.Apellido_Materno} />
+                        <input type="text" className="form-control" name="Apellido_Materno" id="Apellido_Materno" placeholder="Apellido Materno" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Apellido_Materno} />
+                        {formik.touched.Apellido_Materno && formik.errors.Apellido_Materno ? <span>{formik.errors.Apellido_Materno}</span> : null }
                     </div>
                                                 
                     <div className="form-group col-lg-6">
                         <label htmlFor="email" className="control-label mb-0">Email</label>
-                        <input type="email" className="form-control" name="email" placeholder="Email" onChange={formik.handleChange} value={formik.values.email} required />
+                        <input type="email" className="form-control" name="email" placeholder="Email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
+                        {formik.touched.email && formik.errors.email ? <span>{formik.errors.email}</span> : null }
                     </div>
                     
                     <div className="form-group col-lg-6">
                         <label htmlFor="PWD" className="control-label mb-0">Password</label>
-                        <input type="password" className="form-control" name="PWD" id="PWD" placeholder="Password" onChange={formik.handleChange} value={formik.values.PWD} required />
+                        <input type="password" className="form-control" name="PWD" id="PWD" placeholder="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.PWD} />
+                        {formik.touched.PWD && formik.errors.PWD ? <span>{formik.errors.PWD}</span> : null }
                     </div>
                     
                     <div className="form-group col-lg-6">
                         <label htmlFor="RE_PWD" className="control-label mb-0">Confirmar Password</label>
-                        <input type="password" className="form-control" name="RE_PWD" id="RE_PWD" placeholder="Confirmar Password" onChange={formik.handleChange} value={formik.values.RE_PWD} required />
+                        <input type="password" className="form-control" name="RE_PWD" id="RE_PWD" placeholder="Confirmar Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.RE_PWD} />
+                        {formik.touched.RE_PWD && formik.errors.RE_PWD ? <span>{formik.errors.RE_PWD}</span> : null }
                     </div>
                     
                     <div className="form-group col text-right">                                      
