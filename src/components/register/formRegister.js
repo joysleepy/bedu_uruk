@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { BASE_API, SITE_KEY, SECRET_KEY } from '../../keys'; 
 import { ErrorMessage, useFormik } from 'formik'; 
 import * as Yup from 'yup'; 
-
-// const gtokenContainer   = document.getElementById("gToken"); 
-
-// console.log(BASE_API); 
+import swal from 'sweetalert';
 
 function FormRegister(){
     
@@ -20,11 +17,15 @@ function FormRegister(){
     }
     
     useEffect(() => {
-        // Add reCaptcha
-        const script = document.createElement("script"); 
-        script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`; 
-        script.addEventListener("load", handleLoaded)
-        document.body.appendChild(script)
+        // Add reCaptcha FUNCIONA !!!!
+        // const script = document.createElement("script"); 
+        // script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`; 
+        // script.addEventListener("load", handleLoaded)
+        // document.body.appendChild(script)
+        
+        // Esta mejora de performance la sugirio teacher Ozz: cargar la API en el index.html y en el componente 
+        // solo invocarel metodo dentro de este hook 
+        handleLoaded();
     }, []);
 
     const initialValues = {
@@ -37,9 +38,38 @@ function FormRegister(){
         RE_PWD: '' 
     }
     
+    async function postData(data){
+        try{
+            //console.log('postData', data);
+
+            let response = await fetch(`${BASE_API}registro`, {
+                method: 'POST',
+                body: JSON.stringify(data, null, "  "),
+                //body: data, 
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            }); 
+            if (response.ok){
+                response.json().then(result => {
+                    if(result.result){
+
+                    }
+                    else{
+                        swal(result.message); 
+                    }
+                }); 
+            }
+        }
+        catch(e){
+            console.log(e); 
+        }
+    }
+
     const onSubmit = values => {
         handleLoaded();
-        console.log('Form values: ', values); 
+        // console.log('Form values: ', values); 
+        postData(values); 
     }
     
     const validationSchema = Yup.object({
