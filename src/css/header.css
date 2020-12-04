@@ -1,0 +1,31 @@
+
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+  /* Veneno styles */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    line-height: normal;
+    padding-top: .2rem;  
+    padding-bottom: .2rem;  
+}
+
+.btn-w-navy{
+    background-color: var(--uruk-navy);
+    padding-left: .6032rem;
+    padding-right: .6032rem;
+    transition: 0.3s;
+}
+
+.btn-w-navy:hover{
+    filter: opacity(70%);
+}
+
+.btn-w-navy a{
+    color: white !important;
+    font-weight: 500;
+}
+

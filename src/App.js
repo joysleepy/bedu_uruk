@@ -11,7 +11,7 @@ function App() {
 		<BrowserRouter>
 			<Route exact path="/" component={ Welcome } />
 			<Route exact path="/register" component={ Register } />
-			<Route exact path="/login" component={ Login } />
+			<Route exact path="/login/:res?/:variant?/:message?" component={ Login } />
 			<Footer />
 		</BrowserRouter>
   	);

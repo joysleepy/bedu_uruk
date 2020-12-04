@@ -12,13 +12,16 @@
     color: var(--uruk-navy) !important;
   }
   
+  body{
+    line-height: 1.8;
+  }
+
   #header img{
     width: 100px;
   }
   
   #main .carousel-inner img{
-    min-height: 70vh;
-    max-height: 70vh;
+    max-height: 50vh;
     object-fit: cover;
     filter: grayscale(70%);
   }
@@ -114,3 +117,35 @@
     background-color: #343a40;
     color: white;
   }
+
+.btn-w-white{
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  line-height: normal;
+  
+  background-color: white;
+  color: rgba(0, 0, 0, 0.9); 
+  font-weight: 600;
+  
+  padding: 1.2rem 2.004rem;
+}
+
+/* Jumbotron welcome */
+#JumboWelcome {
+  background-image: url('../images/fin_bg_05.jpeg');
+  filter: grayscale(100%);
+  background-size: cover;
+  height: 50vh;
+}
+
+
+#JumboWelcome div.container-fluid{
+  display: flex;
+  align-items: center;
+  color: white;
+
+
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  height: 100%;
+}

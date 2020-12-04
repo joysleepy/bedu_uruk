@@ -8,6 +8,18 @@ html{
   --uruk-cyan: #00ebee;  
   --uruk-light-gray: #f7f7f7;
   --uruk-navy-gradient: linear-gradient(90deg, #173aaf,#173aaf 45%, #174DFF); 
+  --red-alert: #ff0000;
+}
+
+body {
+  font-family: 'Poppins', sans-serif
+}
+
+.heading {
+  font-weight: 700;
+}
+.subheading {
+  font-weight: 300;
 }
 
 /* fondos */
@@ -48,4 +60,12 @@ html{
 /* adjust images */
 .w-100{
   width: 100%;
+}
+
+/* others */
+.label__error{
+  line-height: 1.2;
+  width: 100%;
+  color: var(--red-alert);
+  font-size: 0.8rem;
 }

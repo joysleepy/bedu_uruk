@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from 'react-router-dom'; 
 
+import '../../css/header.css'; 
+import Uruk_logo from '../../images/Uruk_logo-01.png'; 
+
 function Header(){
     return(
-		<nav id="header" className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<nav id="header" className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 			<div className="container">
 				<a className="navbar-brand" href="index.html">
-					<img src='./asets/images/Uruk_logo-01.png' alt="URUK Logo"></img>
+					<img src={Uruk_logo} alt="URUK Logo"></img>
 				</a>
 
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,20 +19,17 @@ function Header(){
 				<div className="collapse navbar-collapse" id="navbar">
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item">
-							<a className="nav-link" href="#main">Que es URÜK
+							<a className="nav-link" href="#main">Conócenos
 							</a>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="#features">Beneficios</a>
+							<a className="nav-link" href="#features">Ofrece</a>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="#secondary">Secondary</a>
+							<a className="nav-link" href="#secondary">Contáctanos</a>
 						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="#newsletter">Newsletter</a>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link uruk-text" to="/register">Registrarse</Link>
+						<li className="nav-item btn-w-navy">
+							<Link className="nav-link uruk-text" to="/register">Regístrate</Link>
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link uruk-text" to="/login">Ingresar</Link>
