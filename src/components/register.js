@@ -1,11 +1,14 @@
 import React from 'react'; 
+import '../css/welcome.css'; 
 
-
+import Header           from './welcome/header'; 
 import WhyRegister      from './register/whyRegister'; 
 import FormRegister     from './register/formRegister'; 
 
 function Welcome(){
     return(
+        <>
+        <Header></Header>
         <section id="content" className="mt-4">
             <div className="container">
                 <div className="row mt-2">
@@ -14,6 +17,7 @@ function Welcome(){
                 </div>
             </div>
         </section>
+        </>
     );
 }
 export default Welcome; 

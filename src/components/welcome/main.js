@@ -2,18 +2,22 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
 
+import Slide_01 from '../../images/fin_bg_01.jpeg'; 
+import Slide_02 from '../../images/fin_bg_02.jpeg'; 
+import Slide_03 from '../../images/fin_bg_03.jpeg'; 
+
 function Main(){
     return(
         <section id="main">
            <Carousel fade={true} controls={false} indicators={false}>
                <Carousel.Item>
-                    <img className="d-block w-100" src="./assets/images/fin_bg_01.jpeg" alt="First slide" />
+                    <img className="d-block w-100" src={ Slide_01 } alt="First slide" />
                </Carousel.Item>
                <Carousel.Item>
-                    <img className="d-block w-100" src="./assets/images/fin_bg_02.jpeg" alt="First slide" />
+                    <img className="d-block w-100" src={ Slide_02 } alt="First slide" />
                </Carousel.Item>
                <Carousel.Item>
-                    <img className="d-block w-100" src="./assets/images/fin_bg_03.jpeg" alt="First slide" />
+                    <img className="d-block w-100" src={ Slide_03 } alt="First slide" />
                </Carousel.Item>         
            </Carousel>
            <div className="overlay">

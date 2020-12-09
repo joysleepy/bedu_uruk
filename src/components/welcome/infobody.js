@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import Aos from 'aos'; 
 import 'aos/dist/aos.css'; 
 
+import Img_Dinastias from '../../images/uruk_dinastias.png'; 
+import Img_Fases from '../../images/uruk_fases.png'; 
 
 function Infobody(){
     useEffect(() => {
@@ -10,7 +12,7 @@ function Infobody(){
             duration: 600,
             easing: 'ease-in-sine',
             delay: 100,
-            once: true, 
+            once: false, 
         });
     }, []);
     
@@ -43,13 +45,13 @@ function Infobody(){
                     </div>
                     
                     <div className="col-12 pt-2 pb-2 col-lg-6 pt-lg-4 pb-lg-4" data-aos="fade-left">
-                        <img className="w-100" src="./assets/images/uruk_dinastias.png" alt="Dinastias Uruk" />
+                        <img className="w-100" src={ Img_Dinastias } alt="Dinastias Uruk" />
                     </div>
                 </div>
                 
                 <div className="row pt-2 pb-2 pt-lg-4 pb-lg-4">
                     <div className="col-12 pt-2 pb-2 col-lg-6 pt-lg-4 pb-lg-4" data-aos="fade-right">
-                        <img className="w-100" src="./assets/images/uruk_fases.png" alt="Fases Uruk" />
+                        <img className="w-100" src={ Img_Fases } alt="Fases Uruk" />
                     </div>
                     
                     <div className="col-12 pt-2 pb-2 col-lg-6 pt-lg-4 pb-lg-4" data-aos="fade-left">

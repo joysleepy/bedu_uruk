@@ -34,12 +34,11 @@ function FormLogin(){
     
     async function postData(data){
         try{
-            //console.log('postData', data);
+            console.log('postData', data);
 
             let response = await fetch(`${BASE_API}auth`, {
                 method: 'POST',
                 body: JSON.stringify(data, null, "  "),
-                //body: data, 
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
                 }
@@ -48,6 +47,12 @@ function FormLogin(){
                 response.json().then(result => {
                     if(result.result){
                         // redirect...
+                        swal('Éxito!', 'Credenciales correctas... redirect a dashboard', 'success'); 
+                        console.log(result); 
+                        // 08 DICIEMBRE 2020
+                        // almacenamos jwt en local storage
+                        localStorage.setItem("access_token", result.jwt);
+                        localStorage.setItem("expire_at", result.expire_at);
                     }
                     else{
                         swal(result.message); 
@@ -62,7 +67,7 @@ function FormLogin(){
 
     const onSubmit = values => {
         handleLoaded();
-        console.log(values); 
+        // console.log(values); 
         postData(values); 
     }
     

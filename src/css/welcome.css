@@ -1,6 +1,6 @@
 /* Estilos espècificos de la pagina de bienmvenda */
 
-:target:before {
+  :target:before {
     content: "";
     display: block;
     height: 100px;
@@ -46,62 +46,7 @@
     height: 100%;
   }
   
-  /*
-  .carousel-fade .carousel-item {
-    opacity: 0;
-    -webkit-transition: opacity 0.1s ease-in-out;
-    -moz-transition: opacity 0.1s ease-in-out;
-    -ms-transition: opacity 0.1s ease-in-out;
-    -o-transition: opacity 0.1s ease-in-out;
-    transition: opacity 0.1s ease-in-out;
-    left: 0 !important;
-  }
-  
-  .carousel-fade .active {
-    opacity: 1 !important;
-  }
-  
-  .carousel-fade .left {
-    opacity: 0 !important;
-    -webkit-transition: opacity 0.5s ease-in-out !important;
-    -moz-transition: opacity 0.5s ease-in-out !important;
-    -ms-transition: opacity 0.5s ease-in-out !important;
-    -o-transition: opacity 0.5s ease-in-out !important;
-    transition: opacity 0.5s ease-in-out !important;
-  }
-  
-  .carousel-fade .carousel-control {
-    opacity: 1 !important;
-  }
-  */
-  
-  
-  
-  /* .carousel-fade .carousel-item {
-      opacity: 0;
-      transition-duration: .9s;
-      transition-property: opacity;
-  }
-  
-  .carousel-fade .carousel-item.active,
-  .carousel-fade .carousel-item-next.carousel-item-left,
-  .carousel-fade .carousel-item-prev.carousel-item-right {
-      opacity: 1;
-  }
-  
-  .carousel-fade .active.carousel-item-left,
-  .carousel-fade .active.carousel-item-right {
-      opacity: 0;
-  }
-  
-  .carousel-fade .carousel-item-next,
-  .carousel-fade .carousel-item-prev,
-  .carousel-fade .carousel-item.active,
-  .carousel-fade .active.carousel-item-left,
-  .carousel-fade .active.carousel-item-prev {
-      transform: translateX(0);
-      transform: translate3d(0, 0, 0);
-  } */
+
 
 /* Footer Styles */
 #footer{
@@ -118,6 +63,9 @@
     color: white;
   }
 
+
+
+/* boton blanco grande */
 .btn-w-white{
   display: inline-block;
   -webkit-font-smoothing: antialiased;
@@ -129,6 +77,37 @@
   
   padding: 1.2rem 2.004rem;
 }
+
+/* boton azul generales */
+.btn-w-navy{
+  background-color: var(--uruk-navy);
+  transition: 0.3s;
+}
+
+.btn-w-navy:hover{
+  filter: opacity(70%);
+}
+
+.btn-w-navy a{
+  color: white !important;
+  font-weight: 500;
+}
+
+  /* para header */
+  .btn-w-navy-header{ 
+    padding-left: .6032rem;
+    padding-right: .6032rem;
+  }
+
+  /* Para contenidos */
+  .btn-w-navy-content{ 
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    line-height: normal;
+    color: white !important;
+    font-weight: 600;
+    padding: 1.2rem 2.004rem;
+  }
 
 /* Jumbotron welcome */
 #JumboWelcome {

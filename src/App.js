@@ -8,7 +8,7 @@ import Footer from './components/welcome/footer';
 
 function App() {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename={'/front'}>
 			<Route exact path="/" component={ Welcome } />
 			<Route exact path="/register" component={ Register } />
 			<Route exact path="/login/:res?/:variant?/:message?" component={ Login } />

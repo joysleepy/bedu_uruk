@@ -2,15 +2,15 @@ import React from "react";
 import { Link } from 'react-router-dom'; 
 
 import '../../css/header.css'; 
-import Uruk_logo from '../../images/Uruk_logo-01.png'; 
+import Uruk_logo from '../../images/Uruk_logo_clean.png'; 
 
 function Header(){
     return(
 		<nav id="header" className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 			<div className="container">
-				<a className="navbar-brand" href="index.html">
+				<Link className="navbar-brand" to="/">
 					<img src={Uruk_logo} alt="URUK Logo"></img>
-				</a>
+				</Link>
 
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@ function Header(){
 						<li className="nav-item">
 							<a className="nav-link" href="#secondary">Contáctanos</a>
 						</li>
-						<li className="nav-item btn-w-navy">
+						<li className="nav-item btn-w-navy btn-w-navy-header">
 							<Link className="nav-link uruk-text" to="/register">Regístrate</Link>
 						</li>
 						<li className="nav-item">

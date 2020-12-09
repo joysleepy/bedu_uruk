@@ -1,11 +1,12 @@
 import React from 'react'; 
 
+import Img_WhyRegister from '../../images/fin_asset_01.jpeg'; 
 
 function WhyRegister(){
     return(
         <div className="col-12 mb-4 col-md-6 mb-md-0">
             <div className="card bg-light-gray">
-                <img className="card-img-top" src="./assets/images/fin_asset_01.jpeg" alt="Card cap" />
+                <img className="card-img-top" src={ Img_WhyRegister } alt="Card cap" />
                 <div className="card-body">
                     <h5 className="card-title">Porqué Registrarse</h5>
                     <p className="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum minima inventore vel at cum, fugiat reprehenderit, quas recusandae amet blanditiis accusantium aliquid impedit totam numquam esse odit qui ipsam in!
