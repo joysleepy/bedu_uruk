@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react'; 
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'; 
+import { Link, Redirect } from 'react-router-dom';
+
+import axios from 'axios'; 
+import jwt from 'jsonwebtoken'; 
 
 import { useFormik } from 'formik'; 
 import * as Yup from 'yup'; 
 import swal from 'sweetalert'; 
 
 import { BASE_API, SITE_KEY } from '../../keys'; 
+import setAutorizationToken from '../utils/setAutorizationToken'; 
 
 import Uruk_logo from '../../images/Uruk_logo-01.png'; 
 
 
-function FormLogin(){    
+function FormLogin({ updateUserData }){    
+    
+    const[isLogged, setIsLogged] = useState(false);
+   
+    const updateIsLogged = (state) => {
+        
+        console.log('updateIsLogged con: ' + state); 
+        
+        setIsLogged(true);
+        // console.log('isLogged: ' + isLogged);   NO TIENE CASO YA QUE ES ASYNCRONO
+	}
+
     const handleLoaded = _ => {
         window.grecaptcha.ready(_ => {
           window.grecaptcha
@@ -24,6 +39,7 @@ function FormLogin(){
     useEffect(() => {
         // Mejora Ozz
         handleLoaded();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const initialValues = {
@@ -32,43 +48,130 @@ function FormLogin(){
         password: '', 
     }
     
-    async function postData(data){
-        try{
-            console.log('postData', data);
+    const postData = (data) => {
+        const headers = {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
 
-            let response = await fetch(`${BASE_API}auth`, {
-                method: 'POST',
-                body: JSON.stringify(data, null, "  "),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
+        axios.post('auth', data, {headers: headers}).then(
+            res => {
+                // console.log(res); 
+                if (res.data.result){   // si login ok
+                    const access_token  = res.data.jwt; 
+                    const expire_at     = res.data.expire_at; 
+                    
+                    // almacenamos jwt en local storage
+                    localStorage.setItem("access_token", access_token);
+                    localStorage.setItem("expire_at", expire_at);  
+                    
+                    //y la guardamos para el resto de la aplicacion
+                    setAutorizationToken(access_token); 
+
+                    // intentando decodear el token..
+                    // console.log(jwt.decode(access_token));
+                    let decoded_token = jwt.decode(access_token); 
+                    console.log(decoded_token); 
+                    
+                    // Me ROMPIO LA CABEZA! PRIMERO ES EL CAMBIO DE ESTADO!!!
+                    updateIsLogged(true); 
+                    
+                    // Y SEGUNDO EL MANDAR LA DATA AL PARENT, de lo contrario el parent se actualizaba y el estado de este componente volvia a FALSE
+                    updateUserData(decoded_token.data); // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
                 }
-            }); 
-            if (response.ok){
-                response.json().then(result => {
-                    if(result.result){
-                        // redirect...
-                        swal('Éxito!', 'Credenciales correctas... redirect a dashboard', 'success'); 
-                        console.log(result); 
-                        // 08 DICIEMBRE 2020
-                        // almacenamos jwt en local storage
-                        localStorage.setItem("access_token", result.jwt);
-                        localStorage.setItem("expire_at", result.expire_at);
-                    }
-                    else{
-                        swal(result.message); 
-                    }
-                }); 
+                else{
+                    swal(res.data.message);
+                    console.log(res.data.log); 
+                }	
+            }, 
+            err => {
+                console.log(err); 
             }
-        }
-        catch(e){
-            console.log(e); 
-        }
+        )
     }
+
+    // async function postData(data){
+
+    //     // ESTE APARTADO FUNCIONA CORRECTAMENTE
+    //     // try{
+    //     //     console.log('postData', data);
+
+    //     //     let response = await fetch(`${BASE_API}auth`, {
+    //     //         method: 'POST',
+    //     //         body: JSON.stringify(data, null, "  "),
+    //     //         headers: {
+    //     //             'Content-type': 'application/json; charset=UTF-8'
+    //     //         }
+    //     //     }); 
+    //     //     if (response.ok){
+    //     //         response.json().then(result => {
+    //     //             if(result.result){
+    //     //                 // redirect...
+    //     //                 swal('Éxito!', 'Credenciales correctas... redirect a dashboard', 'success'); 
+    //     //                 console.log(result); 
+    //     //                 // 08 DICIEMBRE 2020
+    //     //                 // almacenamos jwt en local storage
+    //     //                 localStorage.setItem("access_token", result.jwt);
+    //     //                 localStorage.setItem("expire_at", result.expire_at);
+    //     //             }
+    //     //             else{
+    //     //                 swal(result.message); 
+    //     //             }
+    //     //         }); 
+    //     //     }
+    //     // }
+    //     // catch(e){
+    //     //     console.log(e); 
+    //     // }
+
+    //     // Martes 08 de Diciembre 2020 - Intentando con axios
+    //     try {
+    //         const headers = {
+    //             'Content-type': 'application/json; charset=UTF-8'
+    //         }
+
+    //         const response = await axios.post(`auth`, data, {headers: headers});
+    //         console.log(response);
+            
+    //         if (response.data.result){
+    //             const access_token  = response.data.jwt; 
+    //             const expire_at     = response.data.expire_at; 
+                
+    //             // almacenamos jwt en local storage
+    //             localStorage.setItem("access_token", access_token);
+    //             localStorage.setItem("expire_at", expire_at);
+
+    //             // y la guardamos para el resto de la aplicacion
+    //             setAutorizationToken(access_token); 
+
+    //             // intentando decodear el token..
+    //             // console.log(jwt.decode(access_token));
+    //             let decoded_token = jwt.decode(localStorage.access_token); 
+    //             console.log(decoded_token); 
+    //             updateUserData(decoded_token.data); 
+
+    //             // para trabajar el redirect
+    //             updateIsLogged(true); 
+
+    //         }
+    //         else{
+    //             swal(response.data.message);         
+    //         }
+
+    //     } 
+    //     catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+
+
+
 
     const onSubmit = values => {
         handleLoaded();
         // console.log(values); 
         postData(values); 
+        //updateIsLogged(true); 
     }
     
     const validationSchema = Yup.object({
@@ -96,7 +199,15 @@ function FormLogin(){
         // }
     }
 
-    return(
+    if(isLogged){
+       console.log('islogged es en teoria true...'); 
+       return <Redirect to={'/'} />
+    }
+    else{
+        // console.log('always wrong...');
+    }
+
+    return(        
         <div className="row mt-2">
             <div className="col-12 mb-4 col-md-6 mb-md-0" style={{display: "flex", alignItems: "center"}}>
                 <Link to="/">

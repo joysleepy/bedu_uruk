@@ -7,10 +7,10 @@ import JumboWelcome     from './welcome/jumbo_welcome';
 import Infobody         from './welcome/infobody';
 import Contacto         from './welcome/contacto'; 
 
-function Welcome(){
+function Welcome({userData, updateUserData}){
     return(
         <>
-            <Header></Header>
+            <Header userData={ userData } updateUserData={ updateUserData }></Header>
             <Main />
             <Infobody />
             <JumboWelcome />

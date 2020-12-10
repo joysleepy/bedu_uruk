@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 
 import reportWebVitals from './reportWebVitals';
 
+import { BASE_API } from './keys'; 
+import axios from 'axios'; 
+
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -11,6 +14,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 // components takes precedence over default styles.
 import './index.css';
 import App from './App';
+
+axios.defaults.baseURL = BASE_API; 
 
 ReactDOM.render(
   <React.StrictMode>

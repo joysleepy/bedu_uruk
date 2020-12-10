@@ -3,9 +3,44 @@ import { Link } from 'react-router-dom';
 
 import '../../css/header.css'; 
 import Uruk_logo from '../../images/Uruk_logo_clean.png'; 
+import Welcome from "../register";
 
-function Header(){
-    return(
+function Header({userData, updateUserData}){
+	
+	const handleLogout = () => {
+		localStorage.clear();
+		updateUserData(null);  
+	}
+
+
+	let optRegistrarse;
+	let optRegistrado; 
+
+	if (userData){
+		optRegistrado = (
+			<li className="nav-item">
+				<span className="nav-link"> {userData.Nombres}  
+					<Link to={'/'} onClick={handleLogout}> Salir </Link>
+				</span>
+			</li>
+		);
+	}
+	else{
+		optRegistrarse = (
+			<li className="nav-item btn-w-navy btn-w-navy-header">
+							<Link className="nav-link uruk-text" to="/register">Regístrate</Link>
+			</li>
+		);
+
+		optRegistrado = (
+			<li className="nav-item">
+				<Link className="nav-link uruk-text" to="/login">Ingresar</Link>
+			</li>
+		);
+	}
+
+
+	return(
 		<nav id="header" className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 			<div className="container">
 				<Link className="navbar-brand" to="/">
@@ -28,12 +63,8 @@ function Header(){
 						<li className="nav-item">
 							<a className="nav-link" href="#secondary">Contáctanos</a>
 						</li>
-						<li className="nav-item btn-w-navy btn-w-navy-header">
-							<Link className="nav-link uruk-text" to="/register">Regístrate</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link uruk-text" to="/login">Ingresar</Link>
-						</li>
+						{optRegistrarse}
+						{optRegistrado}
 					</ul>
 				</div>
         	</div>
