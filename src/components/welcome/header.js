@@ -9,14 +9,15 @@ function Header({userData, updateUserData}){
 	
 	const handleLogout = () => {
 		localStorage.clear();
-		updateUserData(null);  
+		updateUserData({});  
 	}
 
 
 	let optRegistrarse;
 	let optRegistrado; 
 
-	if (userData){
+	if (Object.keys(userData).length > 0){
+		console.log(typeof userData); 
 		optRegistrado = (
 			<li className="nav-item">
 				<span className="nav-link"> {userData.Nombres}  

@@ -26,14 +26,14 @@ function App() {
 	useEffect(() => {
 		axios.get('checkToken').then(
 			res => {
-				// console.log(res); 
+				console.log(res); 
 				if (res.data.result){ // si el token aun esta vigente
 					let decoded_token = jwt.decode(localStorage.access_token); 
 					console.log(decoded_token); 
 					updateUserData(decoded_token.data); 
 				}
 				else{
-					console.log(res.data.message); 
+					console.log('Empty user data'); 
 				}	
 			}, 
 			err => {
