@@ -285,22 +285,38 @@ export default function Fiel() {
 										<p>Vigencia hasta: <span>{ ValHasta }</span></p>
 										<p><strong>Contraseña</strong> <span>{ PassOk ? 'Correcta' : 'Incorrecta' }</span></p>
 
-										<p>
-											<button type="button" class="btn btn-success" onClick={ handleConsultaSAT } disabled={ tglSATButton } style={{ width: '100%'}}>
-												Realizar Consulta de Prueba ante el SAT
-											</button>
-										</p>
-										
-										<p> { resMesSAT } </p>
 										{
-											resSAT && (
-												<>
-													<p> ID Solicitud: { idSol } </p>
-													<p> Cod. Status: { codStat } </p>
-													<p> Mensaje: { menStat} </p>
-												</>
+											TipoCer == 'FIEL' ? (
+											<>	
+												<p>
+													<button type="button" class="btn btn-success" onClick={ handleConsultaSAT } disabled={ tglSATButton } style={{ width: '100%'}}>
+														Realizar Consulta de Prueba ante el SAT
+													</button>
+												</p>
+												
+												
+												<p> { resMesSAT } </p>
+												{
+													resSAT && (
+														<>
+															<p> ID Solicitud: { idSol } </p>
+															<p> Cod. Status: { codStat } </p>
+															<p> Mensaje: { menStat} </p>
+														</>
+													)
+												}
+											</>
+											) : (
+												<p>
+												<button type="button" className="btn btn-danger">
+													Archivo CSD detectado, Por favor proporcione el archivo correspondiente a la FIEL 
+												</button>
+											</p>
 											)
+
+
 										}
+
 									</>
 								)
 							}
