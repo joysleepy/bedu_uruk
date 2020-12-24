@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom'; 
 
+
 import Dash from './pages/dashboard/Dash'; 
 import Fiel from './pages/fiel/Fiel';
+import Conytribuyente from './pages/contribuyente/Conytribuyente';
 
 export default function Admcontent() {
     // let { url, path } = useRouteMatch();
@@ -32,6 +34,7 @@ export default function Admcontent() {
             <div className="content">
                 <Switch>
                     <Route path={`/main/dash`} component={Dash}/>
+                    <Route path={`/main/contribuyente`} component={Conytribuyente}/>
                     <Route path={`/main`} component={Fiel}/>
                 </Switch>
             </div>

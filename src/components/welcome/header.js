@@ -19,7 +19,7 @@ function Header({userData, updateUserData}){
 	if (Object.keys(userData).length > 0){
 		console.log(typeof userData); 
 		optRegistrado = (
-			<li className="nav-item">
+			<li className="w-nav-item">
 				<span className="nav-link"> {userData.Nombres}  
 					<Link to={'/'} onClick={handleLogout}> Salir </Link>
 				</span>
@@ -28,13 +28,13 @@ function Header({userData, updateUserData}){
 	}
 	else{
 		optRegistrarse = (
-			<li className="nav-item btn-w-navy btn-w-navy-header">
+			<li className="w-nav-item btn-w-navy btn-w-navy-header">
 							<Link className="nav-link uruk-text" to="/register">Regístrate</Link>
 			</li>
 		);
 
 		optRegistrado = (
-			<li className="nav-item">
+			<li className="w-nav-item">
 				<Link className="nav-link uruk-text" to="/login">Ingresar</Link>
 			</li>
 		);
@@ -54,14 +54,14 @@ function Header({userData, updateUserData}){
 				
 				<div className="collapse navbar-collapse" id="navbar">
 					<ul className="navbar-nav ml-auto">
-						<li className="nav-item">
+						<li className="w-nav-item">
 							<a className="nav-link" href="#main">Conócenos
 							</a>
 						</li>
-						<li className="nav-item">
+						<li className="w-nav-item">
 							<a className="nav-link" href="#features">Ofrece</a>
 						</li>
-						<li className="nav-item">
+						<li className="w-nav-item">
 							<a className="nav-link" href="#secondary">Contáctanos</a>
 						</li>
 						{optRegistrarse}

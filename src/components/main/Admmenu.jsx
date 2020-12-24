@@ -40,6 +40,8 @@ export default function Admmenu() {
             </span>
           </div>
         </div>
+        
+        
         {/* Sidebar Menu */}
         <nav className="mt-2">
           <ul
@@ -51,6 +53,7 @@ export default function Admmenu() {
             {/* Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library */}
             <li className="nav-item has-treeview menu-open">
+              
               <Link to="/main" className="nav-link active">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>
@@ -66,7 +69,15 @@ export default function Admmenu() {
                       <p>Dashboard v1</p>
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link className="nav-link" to={`${url}/contribuyente`}>
+                    <i className="far fa-circle nav-icon" />
+                      <p>Contribuyente</p>
+                  </Link>
+                </li>
               </ul>
+
             </li>
           </ul>
         </nav>
