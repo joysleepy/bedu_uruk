@@ -4,6 +4,7 @@ import '../css/welcome.css';
 import Header           from './welcome/header'; 
 import WhyRegister      from './register/whyRegister'; 
 import FormRegister     from './register/formRegister'; 
+import Footer           from './welcome/footer';
 
 function Welcome({ userData, updateUserData }){
     return(
@@ -17,6 +18,7 @@ function Welcome({ userData, updateUserData }){
                 </div>
             </div>
         </section>
+        <Footer />
         </>
     );
 }

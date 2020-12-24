@@ -6,5 +6,7 @@ export default function setAutorizationToken(token){
     }
     else{
         delete axios.defaults.headers.common['Authorization']; 
+        // PROBANDO SI LO PODEMOS QUITAR TAMBIEN DEL LOCAL STORAGE
+        localStorage.clear();
     }
 }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'; 
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';     // agregamos useContext
+import { Link, useHistory } from 'react-router-dom';
 
 import axios from 'axios'; 
 import jwt from 'jsonwebtoken'; 
@@ -8,23 +8,29 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'; 
 import swal from 'sweetalert'; 
 
-import { BASE_API, SITE_KEY } from '../../keys'; 
+import { SITE_KEY } from '../../keys'; 
 import setAutorizationToken from '../utils/setAutorizationToken'; 
 
 import Uruk_logo from '../../images/Uruk_logo-01.png'; 
 
 
-function FormLogin({ updateUserData }){    
+// agregamos el contexto para actualizar...
+// import UserContext from '../context/UserContext'; 
+
+function FormLogin(props){    
+    const history = useHistory();
     
-    const[isLogged, setIsLogged] = useState(false);
+    const[ isLogged, setIsLogged ] = useState(false);
+    
+    // const { usrData, setUsrData } = useContext(UserContext); 
    
-    const updateIsLogged = (state) => {
-        
-        console.log('updateIsLogged con: ' + state); 
-        
-        setIsLogged(true);
-        // console.log('isLogged: ' + isLogged);   NO TIENE CASO YA QUE ES ASYNCRONO
-	}
+    // const updateIsLogged = (state) => {
+    //     //console.log('updateIsLogged con: ' + state); 
+    //     setIsLogged(true);
+    //     // console.log('isLogged: ' + isLogged);   NO TIENE CASO YA QUE ES ASYNCRONO
+	// }
+
+
 
     const handleLoaded = _ => {
         window.grecaptcha.ready(_ => {
@@ -70,13 +76,23 @@ function FormLogin({ updateUserData }){
                     // intentando decodear el token..
                     // console.log(jwt.decode(access_token));
                     let decoded_token = jwt.decode(access_token); 
-                    console.log(decoded_token); 
-                    
+                    //console.log('token en login:', decoded_token.data); 
+
                     // Me ROMPIO LA CABEZA! PRIMERO ES EL CAMBIO DE ESTADO!!!
-                    updateIsLogged(true); 
+                    //updateIsLogged(true); 
+                    setIsLogged(true);
+
+                    // let tokenData = [];
+                    // tokenData.push(decoded_token.data);
+
+                    // console.log('tokenData', tokenData); 
+                    
+                    // Prtobando contexto
+                    // console.log('token data', access_token.data); 
+                    // setUsrData(JSON.stringify(decoded_token.data)); 
                     
                     // Y SEGUNDO EL MANDAR LA DATA AL PARENT, de lo contrario el parent se actualizaba y el estado de este componente volvia a FALSE
-                    updateUserData(decoded_token.data); // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
+                    props.updateUserData(decoded_token.data); // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
                 }
                 else{
                     swal(res.data.message);
@@ -88,84 +104,6 @@ function FormLogin({ updateUserData }){
             }
         )
     }
-
-    // async function postData(data){
-
-    //     // ESTE APARTADO FUNCIONA CORRECTAMENTE
-    //     // try{
-    //     //     console.log('postData', data);
-
-    //     //     let response = await fetch(`${BASE_API}auth`, {
-    //     //         method: 'POST',
-    //     //         body: JSON.stringify(data, null, "  "),
-    //     //         headers: {
-    //     //             'Content-type': 'application/json; charset=UTF-8'
-    //     //         }
-    //     //     }); 
-    //     //     if (response.ok){
-    //     //         response.json().then(result => {
-    //     //             if(result.result){
-    //     //                 // redirect...
-    //     //                 swal('Éxito!', 'Credenciales correctas... redirect a dashboard', 'success'); 
-    //     //                 console.log(result); 
-    //     //                 // 08 DICIEMBRE 2020
-    //     //                 // almacenamos jwt en local storage
-    //     //                 localStorage.setItem("access_token", result.jwt);
-    //     //                 localStorage.setItem("expire_at", result.expire_at);
-    //     //             }
-    //     //             else{
-    //     //                 swal(result.message); 
-    //     //             }
-    //     //         }); 
-    //     //     }
-    //     // }
-    //     // catch(e){
-    //     //     console.log(e); 
-    //     // }
-
-    //     // Martes 08 de Diciembre 2020 - Intentando con axios
-    //     try {
-    //         const headers = {
-    //             'Content-type': 'application/json; charset=UTF-8'
-    //         }
-
-    //         const response = await axios.post(`auth`, data, {headers: headers});
-    //         console.log(response);
-            
-    //         if (response.data.result){
-    //             const access_token  = response.data.jwt; 
-    //             const expire_at     = response.data.expire_at; 
-                
-    //             // almacenamos jwt en local storage
-    //             localStorage.setItem("access_token", access_token);
-    //             localStorage.setItem("expire_at", expire_at);
-
-    //             // y la guardamos para el resto de la aplicacion
-    //             setAutorizationToken(access_token); 
-
-    //             // intentando decodear el token..
-    //             // console.log(jwt.decode(access_token));
-    //             let decoded_token = jwt.decode(localStorage.access_token); 
-    //             console.log(decoded_token); 
-    //             updateUserData(decoded_token.data); 
-
-    //             // para trabajar el redirect
-    //             updateIsLogged(true); 
-
-    //         }
-    //         else{
-    //             swal(response.data.message);         
-    //         }
-
-    //     } 
-    //     catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-
-
-
 
     const onSubmit = values => {
         handleLoaded();
@@ -200,8 +138,9 @@ function FormLogin({ updateUserData }){
     }
 
     if(isLogged){
-       console.log('islogged es en teoria true...'); 
-       return <Redirect to={'/'} />
+        console.log('islogged es en teoria true...'); 
+        //return <Redirect to={'/main'} />
+        history.push('/main');  
     }
     else{
         // console.log('always wrong...');

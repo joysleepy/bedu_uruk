@@ -6,6 +6,7 @@ import Main             from './welcome/main';
 import JumboWelcome     from './welcome/jumbo_welcome'; 
 import Infobody         from './welcome/infobody';
 import Contacto         from './welcome/contacto'; 
+import Footer           from './welcome/footer';  
 
 function Welcome({userData, updateUserData}){
     return(
@@ -15,6 +16,7 @@ function Welcome({userData, updateUserData}){
             <Infobody />
             <JumboWelcome />
             <Contacto /> 
+            <Footer />
         </>
     );
 }
