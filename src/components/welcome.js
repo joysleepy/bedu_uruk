@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useContext } from 'react'; 
 import '../css/welcome.css'; 
 
 import Header           from './welcome/header'; 
@@ -7,11 +7,13 @@ import JumboWelcome     from './welcome/jumbo_welcome';
 import Infobody         from './welcome/infobody';
 import Contacto         from './welcome/contacto'; 
 import Footer           from './welcome/footer';  
+import AuthContext from '../store/AutContext';
+function Welcome({userData2=null, updateUserData=null}){
 
-function Welcome({userData, updateUserData}){
+    const [auth,userData] = useContext(AuthContext);
     return(
         <>
-            <Header userData={ userData } updateUserData={ updateUserData }></Header>
+            <Header></Header>
             <Main />
             <Infobody />
             <JumboWelcome />

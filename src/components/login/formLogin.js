@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';     // agregamos useContext
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import axios from 'axios'; 
 import jwt from 'jsonwebtoken'; 
@@ -12,25 +12,23 @@ import { SITE_KEY } from '../../keys';
 import setAutorizationToken from '../utils/setAutorizationToken'; 
 
 import Uruk_logo from '../../images/Uruk_logo-01.png'; 
+import AuthContext from '../../store/AutContext';
 
 
 // agregamos el contexto para actualizar...
 // import UserContext from '../context/UserContext'; 
 
 function FormLogin(props){    
-    const history = useHistory();
+//     const history = useHistory();
     
-    const[ isLogged, setIsLogged ] = useState(false);
+//     const[ isLogged, setIsLogged ] = useState(false);
     
-    // const { usrData, setUsrData } = useContext(UserContext); 
+//    const { userData, setUserData } = useState({}); 
    
-    // const updateIsLogged = (state) => {
-    //     //console.log('updateIsLogged con: ' + state); 
-    //     setIsLogged(true);
-    //     // console.log('isLogged: ' + isLogged);   NO TIENE CASO YA QUE ES ASYNCRONO
-	// }
+    const [auth, setAuth] = useState(false);
 
 
+    // const [auth,userData] = useContext(AuthContext)
 
     const handleLoaded = _ => {
         window.grecaptcha.ready(_ => {
@@ -72,15 +70,15 @@ function FormLogin(props){
                     
                     //y la guardamos para el resto de la aplicacion
                     setAutorizationToken(access_token); 
-
+                    setAuth(true)
                     // intentando decodear el token..
                     // console.log(jwt.decode(access_token));
-                    let decoded_token = jwt.decode(access_token); 
+                    //let decoded_token = jwt.decode(access_token); 
                     //console.log('token en login:', decoded_token.data); 
 
                     // Me ROMPIO LA CABEZA! PRIMERO ES EL CAMBIO DE ESTADO!!!
                     //updateIsLogged(true); 
-                    setIsLogged(true);
+                    //setAuth(true);
 
                     // let tokenData = [];
                     // tokenData.push(decoded_token.data);
@@ -92,7 +90,8 @@ function FormLogin(props){
                     // setUsrData(JSON.stringify(decoded_token.data)); 
                     
                     // Y SEGUNDO EL MANDAR LA DATA AL PARENT, de lo contrario el parent se actualizaba y el estado de este componente volvia a FALSE
-                    props.updateUserData(decoded_token.data); // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
+                    
+                     // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
                 }
                 else{
                     swal(res.data.message);
@@ -136,14 +135,13 @@ function FormLogin(props){
         //     eye_pass.classList.remove('fa-eye').add('fa-eye-slash');
         // }
     }
-
-    if(isLogged){
-        console.log('islogged es en teoria true...'); 
-        //return <Redirect to={'/main'} />
-        history.push('/main');  
-    }
-    else{
-        // console.log('always wrong...');
+    if(localStorage.access_token && auth){
+    //console.log('islogged es en teoria true...'); 
+    return (<Redirect to='/main'/>)
+    //     //history.push('/main');  
+    // }
+    // else{
+    //     console.log('always wrong...');
     }
 
     return(        

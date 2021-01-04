@@ -1,5 +1,6 @@
-import { React, useState, useEffect } from 'react'; 
-import { useParams } from 'react-router';
+import { React, useState, useEffect, useContext } from 'react'; 
+import { Redirect, useParams } from 'react-router';
+import AuthContext from '../store/AutContext';
 import Admcontent from './main/Admcontent';
 import Admfooter from './main/Admfooter';
 import Admheader from './main/Admheader';
@@ -10,6 +11,7 @@ import Admmenu from './main/Admmenu';
 // import { isAuthenticaded } from './auth'; 
 
 function Main() {
+
     return (
         <div className="wrapper">
             <Admheader />

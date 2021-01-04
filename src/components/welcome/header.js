@@ -1,23 +1,36 @@
-import React from "react";
-import { Link } from 'react-router-dom'; 
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Redirect, useHistory } from 'react-router-dom'; 
 
 import '../../css/header.css'; 
 import Uruk_logo from '../../images/Uruk_logo_clean.png'; 
+import AuthContext from "../../store/AutContext";
 import Welcome from "../register";
+import jwt from 'jsonwebtoken'; 
 
-function Header({userData, updateUserData}){
-	
+function Header(){
+	const history = useHistory();
+	const [auth, setAuth] = useState(false);
+	const [userData, setUserData] = useState({});
 	const handleLogout = () => {
 		localStorage.clear();
-		updateUserData({});  
+		setAuth(false);
+		setUserData({});
+
 	}
 
+	useEffect(() => {
+		if(localStorage.access_token){
+			const t = jwt.decode(localStorage.access_token).data;
+			if(t){
+				setUserData(t);
+			}
+		}
+	}, [])
 
 	let optRegistrarse;
 	let optRegistrado; 
 
-	if (Object.keys(userData).length > 0){
-		console.log(typeof userData); 
+	if (userData.Nombre){
 		optRegistrado = (
 			<li className="w-nav-item">
 				<span className="nav-link"> {userData.Nombres}  

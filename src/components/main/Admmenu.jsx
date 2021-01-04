@@ -1,10 +1,13 @@
 import React, { useContext }from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import AuthContext from "../../store/AutContext";
 
 // import UserContext from '../context/UserContext'; 
 
 export default function Admmenu() {
-  let { url } = useRouteMatch();
+
+    const [auth,setAuth] = useContext(AuthContext);
+    let { url } = useRouteMatch();
   // const context = useContext(UserContext);
   // console.log('context', context); 
 
@@ -35,8 +38,8 @@ export default function Admmenu() {
             />
           </div>
           <div className="info">
-            <span className="d-block">
-              {/* { usrData.Nombre_Completo } */}
+            <span className="d-block text-wite">
+              {/* { userData.Nombre_Completo } */}
             </span>
           </div>
         </div>
