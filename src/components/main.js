@@ -1,6 +1,5 @@
 import { React } from 'react'; 
 
-import AuthContext from '../store/AutContext';
 import Admcontent from './main/Admcontent';
 import Admfooter from './main/Admfooter';
 import Admheader from './main/Admheader';
@@ -23,37 +22,4 @@ function Main() {
         </div>
     )
 }
-export default Main; 
-
-
-
-
-
-
-
-
-    // const [aut, setAuth] = useState(false);
-    
-    // useEffect(() => {
-    //     async function x(){
-    //         const auth = await isAuthenticaded();
-    //         console.log('auth', auth);
-            
-    //         setAuth(auth)
-    //     } 
-        
-    //     x();
-
-    // }, []);
-    
-    // isAuthenticaded().then(res => {
-    //     console.log('main', res); 
-    // });
-    //
-
-    // if(aut){
-    //     console.log('token correcto');
-    // }
-    // else{
-    //     console.log('token expirado o nulo');
-    // }
+export default Main;
