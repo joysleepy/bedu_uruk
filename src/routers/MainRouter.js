@@ -1,15 +1,42 @@
-import React,{ useContext } from "react";
+import React, { useState, useEffect } from 'react';     // agregamos useContext
 import { Redirect, Route } from "react-router-dom";
-import AuthContext from "../store/AutContext";
-import jwt from 'jsonwebtoken'; 
+
+import { isAuthenticaded } from '../components/auth'; 
 
 export default function MainRouter(props) {
-    if(localStorage.access_token){
-        const t = jwt.decode(localStorage.access_token).data;
-        if(t){
-            return <Route  {...props} />;
-        }
-    }
-    return <Redirect to='/' />;
+    const [loading, setLoading] = useState(true);
+    const [isAut, setIsAut]     = useState(false);
 
+    const { component: Component, ...rest } = props;
+    
+    useEffect(() => {
+        const fetchData = async () => {
+
+            const res = await isAuthenticaded();
+            
+            setIsAut(res);
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    return (
+        <Route
+            {...rest}
+            render={() =>
+                isAut ? (
+                    <Component {...props} />
+                ) : loading ? (
+                    <div>LOADING...</div>
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: props.location },
+                        }}
+                    />
+                )
+            }
+        />
+    );
 }

@@ -1,14 +1,10 @@
-import { React, useState, useEffect, useContext } from 'react'; 
-import { Redirect, useParams } from 'react-router';
+import { React } from 'react'; 
+
 import AuthContext from '../store/AutContext';
 import Admcontent from './main/Admcontent';
 import Admfooter from './main/Admfooter';
 import Admheader from './main/Admheader';
 import Admmenu from './main/Admmenu';
-//import Auth from './auth'; 
-// const { promise } = require('./auth'); // //
-
-// import { isAuthenticaded } from './auth'; 
 
 function Main() {
 

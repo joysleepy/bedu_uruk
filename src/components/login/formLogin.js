@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';     // agregamos useContext
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';     // agregamos useContext
+import { Link, Redirect } from 'react-router-dom';
 
 import axios from 'axios'; 
-import jwt from 'jsonwebtoken'; 
 
 import { useFormik } from 'formik'; 
 import * as Yup from 'yup'; 
@@ -12,23 +11,13 @@ import { SITE_KEY } from '../../keys';
 import setAutorizationToken from '../utils/setAutorizationToken'; 
 
 import Uruk_logo from '../../images/Uruk_logo-01.png'; 
-import AuthContext from '../../store/AutContext';
+import { useLocalStorage }  from '../../hooks/useLocalStorage'; 
 
-
-// agregamos el contexto para actualizar...
-// import UserContext from '../context/UserContext'; 
-
-function FormLogin(props){    
-//     const history = useHistory();
-    
-//     const[ isLogged, setIsLogged ] = useState(false);
-    
-//    const { userData, setUserData } = useState({}); 
-   
+function FormLogin(props){       
     const [auth, setAuth] = useState(false);
 
-
-    // const [auth,userData] = useContext(AuthContext)
+    // Intrentaremos guardar el token en session 
+    const [token, setToken] = useLocalStorage('token', ''); 
 
     const handleLoaded = _ => {
         window.grecaptcha.ready(_ => {
@@ -62,36 +51,14 @@ function FormLogin(props){
                 // console.log(res); 
                 if (res.data.result){   // si login ok
                     const access_token  = res.data.jwt; 
-                    const expire_at     = res.data.expire_at; 
-                    
-                    // almacenamos jwt en local storage
-                    localStorage.setItem("access_token", access_token);
-                    localStorage.setItem("expire_at", expire_at);  
-                    
-                    //y la guardamos para el resto de la aplicacion
+                    //const expire_at     = res.data.expire_at; 
+                                        
+                    // Ahora lo guardaremos en un custom hook que guardara en localStorage
+                    setToken(access_token); 
+
+                    // Este metodo es para que persista en todas los envios mediante axios
                     setAutorizationToken(access_token); 
-                    setAuth(true)
-                    // intentando decodear el token..
-                    // console.log(jwt.decode(access_token));
-                    //let decoded_token = jwt.decode(access_token); 
-                    //console.log('token en login:', decoded_token.data); 
-
-                    // Me ROMPIO LA CABEZA! PRIMERO ES EL CAMBIO DE ESTADO!!!
-                    //updateIsLogged(true); 
-                    //setAuth(true);
-
-                    // let tokenData = [];
-                    // tokenData.push(decoded_token.data);
-
-                    // console.log('tokenData', tokenData); 
-                    
-                    // Prtobando contexto
-                    // console.log('token data', access_token.data); 
-                    // setUsrData(JSON.stringify(decoded_token.data)); 
-                    
-                    // Y SEGUNDO EL MANDAR LA DATA AL PARENT, de lo contrario el parent se actualizaba y el estado de este componente volvia a FALSE
-                    
-                     // en teoria esta actualiza por el state del componente padre (abuelo en este caso)  
+                    setAuth(true); 
                 }
                 else{
                     swal(res.data.message);
@@ -135,13 +102,10 @@ function FormLogin(props){
         //     eye_pass.classList.remove('fa-eye').add('fa-eye-slash');
         // }
     }
-    if(localStorage.access_token && auth){
-    //console.log('islogged es en teoria true...'); 
-    return (<Redirect to='/main'/>)
-    //     //history.push('/main');  
-    // }
-    // else{
-    //     console.log('always wrong...');
+    
+    if(token && auth){
+        // Si tenemos token y auth redireccionamos a main
+        return (<Redirect to='/main'/>)
     }
 
     return(        
@@ -152,59 +116,54 @@ function FormLogin(props){
                 </Link>
             </div>
             <div className="col-12 mb-4 col-md-6 mb-md-0">
-            <div id="loginbox" style={{marginTop:"50px"}} className="mainbox">                    
-                <div className="panel panel-info" >
-                    <div className="panel-heading">
-                        <div className="panel-title">Iniciar Sesi&oacute;n</div>
-                        <div style={{float:"right", fontSize: "80%", position: "relative", top:"-25px"}}><a href="recupera.html">¿Se te olvid&oacute; tu contraseña?</a></div>
-                    </div>     
+                <div id="loginbox" style={{marginTop:"50px"}} className="mainbox">                    
+                    <div className="panel panel-info">
+                        <div className="panel-heading">
+                            <div className="panel-title">Iniciar Sesi&oacute;n</div>
+                            <div style={{float:"right", fontSize: "80%", position: "relative", top:"-25px"}}><a href="recupera.html">¿Se te olvid&oacute; tu contraseña?</a></div>
+                        </div>     
                     
-                    <div style={{paddingTop:"30px"}} className="panel-body" >
-                        
-                        <form id="loginform" className="form-horizontal" action="" method="POST" autoComplete="off" onSubmit={formik.handleSubmit}>
-                            <input type="hidden" name="gToken" id="gToken" onChange={formik.handleChange} value={formik.values.gToken} />
-                            
-                            <div style={{marginBottom: "25px"}} className="input-group">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text fa fa-user icon"></span>
-                                </div>   
-                                <input type="text" className="form-control" name="usuario" placeholder="email" {...formik.getFieldProps('usuario')} /> 
-                                {formik.touched.usuario && formik.errors.usuario ? <span className="label__error">{formik.errors.usuario}</span> : null }
-                            </div>
-                            
-                            <div style={{marginBottom: "25px"}} className="input-group">
-                                <input type="password" className="form-control" name="password" id="password" placeholder="Password" {...formik.getFieldProps('password')}  />
-                                <div className="input-group-append">
-                                    <button id="show_password" className="btn btn-primary" type="button" onClick={mostrarPassword()}> 
-                                        <span id="eye_pass" className="fa fa-eye-slash icon"></span> 
-                                    </button>
+                        <div style={{paddingTop:"30px"}} className="panel-body" >
+                            <form id="loginform" className="form-horizontal" action="" method="POST" 
+                                autoComplete="off" onSubmit={formik.handleSubmit}>
+                                <input type="hidden" name="gToken" id="gToken" onChange={formik.handleChange} value={formik.values.gToken} />
+                                
+                                <div style={{marginBottom: "25px"}} className="input-group">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text fa fa-user icon"></span>
+                                    </div>   
+                                    <input type="text" className="form-control" name="usuario" placeholder="email" {...formik.getFieldProps('usuario')} /> 
+                                    {formik.touched.usuario && formik.errors.usuario ? <span className="label__error">{formik.errors.usuario}</span> : null }
                                 </div>
-                                {formik.touched.password && formik.errors.password ? <span className="label__error">{formik.errors.password}</span> : null }
-                            </div>
-                            
-                            <div style={{marginTop:"10px"}} className="form-group">
-                                <div className="col-sm-12 controls text-right">
-                                    <button id="btn-login" type="submit" className="btn btn-success bg-uruk-navy">Iniciar Sesi&oacute;n</button>
+                                
+                                <div style={{marginBottom: "25px"}} className="input-group">
+                                    <input type="password" className="form-control" name="password" id="password" placeholder="Password" {...formik.getFieldProps('password')}  />
+                                    <div className="input-group-append">
+                                        <button id="show_password" className="btn btn-primary" type="button" onClick={mostrarPassword()}> 
+                                            <span id="eye_pass" className="fa fa-eye-slash icon"></span> 
+                                        </button>
+                                    </div>
+                                    {formik.touched.password && formik.errors.password ? <span className="label__error">{formik.errors.password}</span> : null }
                                 </div>
-                            </div>
-                            
-                            <div className="form-group">
-                                <div className="col-md-12 control">
-                                    <div style={{borderTop: "1px solid #888", paddingTop:"15px", fontSize:"85%"}} >
-                                        No tienes una cuenta aún? <Link to="/register">Registrate aquí</Link>
+                                
+                                <div style={{marginTop:"10px"}} className="form-group">
+                                    <div className="col-sm-12 controls text-right">
+                                        <button id="btn-login" type="submit" className="btn btn-success bg-uruk-navy">Iniciar Sesi&oacute;n</button>
                                     </div>
                                 </div>
-                            </div>    
-                        </form>
-                        
-                        <pre className="results__display-wrapper">
-                            <code className="results__display"></code>
-                        </pre>
-
-                    </div>                     
-                </div>  
+                                
+                                <div className="form-group">
+                                    <div className="col-md-12 control">
+                                        <div style={{borderTop: "1px solid #888", paddingTop:"15px", fontSize:"85%"}} >
+                                            No tienes una cuenta aún? <Link to="/register">Registrate aquí</Link>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </form>
+                        </div>                     
+                    </div>  
+                </div>
             </div>
-        </div>
         </div>
     );
 }
