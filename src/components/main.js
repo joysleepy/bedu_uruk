@@ -6,7 +6,6 @@ import Admheader from './main/Admheader';
 import Admmenu from './main/Admmenu';
 
 function Main() {
-
     return (
         <div className="wrapper">
             <Admheader />

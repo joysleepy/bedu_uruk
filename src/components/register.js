@@ -6,7 +6,7 @@ import WhyRegister      from './register/whyRegister';
 import FormRegister     from './register/formRegister'; 
 import Footer           from './welcome/footer';
 
-function Register({ userData = null, updateUserData = null}){
+function Register(){
     return(
         <>
         <Header ></Header>
