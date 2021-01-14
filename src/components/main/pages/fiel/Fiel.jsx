@@ -188,7 +188,7 @@ export default function Fiel() {
 			</div>
 
       		<div className="row">
-        		<div className="col-6">
+        		<div className="col-12 col-md-6">
           			<div className="card card-primary">
             			<div className="card-header">
               				<h3 className="card-title">Archivos de la FIEL</h3>
@@ -269,7 +269,7 @@ export default function Fiel() {
          			</div>
         		</div>
 
-				<div className="col-6">
+				<div className="col-12 col-md-6">
 					<div className="card">
 						<div className="card-body">
 							<h5 className="card-title">{ resMes }</h5> 
